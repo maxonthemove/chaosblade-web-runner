@@ -1,0 +1,105 @@
+{
+  "create": {
+    "children": {
+      "cpu": {
+        "children": {},
+        "desc": "Cpu experiment"
+      },
+      "disk": {
+        "children": {},
+        "desc": "Disk experiment"
+      },
+      "docker": {
+        "children": {},
+        "desc": "Execute a docker experiment"
+      },
+      "dubbo": {
+        "children": {},
+        "desc": "dubbo experiment"
+      },
+      "jvm": {
+        "children": {
+          "delay": {
+            "param": {
+              "classname": {
+                "type": "string",
+                "desc": "The class name with package"
+              },
+              "methodname": {
+                "type": "string",
+                "desc": "The method name"
+              },
+              "process": {
+                "type": "string",
+                "desc": "Application process name"
+              },
+              "value": {
+                "type": "string",
+                "desc": "Value returned, only support primitive type value. If you want return null, set --value null (required)"
+              }
+            },
+            "desc": "delay time"
+          },
+          "return": {
+            "param": {},
+            "desc": "Return the specify value"
+          },
+          "throwCustomException": {
+            "param": {},
+            "desc": "throw custom exception"
+          },
+          "throwDeclaredException": {
+            "param": {},
+            "desc": "Throw the first declared exception of method"
+          }
+        },
+        "desc": "method"
+      },
+      "k8s": {
+        "children": {},
+        "desc": "Kubernetes experiment"
+      },
+      "mysql": {
+        "children": {},
+        "desc": "mysql experiment"
+      },
+      "network": {
+        "children": {},
+        "desc": "Network experiment"
+      },
+      "process": {
+        "children": {},
+        "desc": "Process experiment"
+      },
+      "servlet": {
+        "children": {},
+        "desc": "java servlet experiment"
+      }
+    },
+    "desc": "Create a chaos engineering experiment"
+  },
+  "destroy": {
+    "children": {},
+    "desc": "Destroy a chaos experiment"
+  },
+  "help": {
+    "children": {},
+    "desc": "Help about any command"
+  },
+  "prepare": {
+    "children": {},
+    "desc": "Prepare to experiment"
+  },
+  "revoke": {
+    "children": {},
+    "desc": "Undo chaos engineering experiment preparation"
+  },
+  "status": {
+    "children": {},
+    "desc": "Query preparation stage or experiment status"
+  },
+  "version": {
+    "children": {},
+    "desc": "Print version info"
+  }
+}

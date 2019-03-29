@@ -1,4 +1,4 @@
-package pers.freezee.shellrunner.Controller;
+package pers.freezee.shellrunner.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
