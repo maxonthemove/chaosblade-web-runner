@@ -23,7 +23,9 @@ public class ShellController {
         modelAndView.addObject("shell",shell);
         ShellCommand shellCommand = new ShellCommand();
         shellCommand.runCommand(shell);
-        modelAndView.addObject("message",shellCommand.getResponseString());
+        modelAndView.addObject("message",shellCommand.getResponseString().replaceAll("OUTPUT>","\\\r\\\n")+
+                shellCommand.getErrorString().replaceAll("ERROR>",""));
+
         return modelAndView;
     }
 }
