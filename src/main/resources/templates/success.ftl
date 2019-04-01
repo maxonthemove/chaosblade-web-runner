@@ -9,7 +9,9 @@
 ${shell}
 <br/>
 执行结果：
-${message}
+<#list messageList as item>
+${item}<br/>
+</#list>
 <form action="/shell/run" method="get">
     <div>
         <div>输入shell</div>

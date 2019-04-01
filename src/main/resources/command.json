@@ -1,79 +1,200 @@
 {
+  "help": {
+    "children": {},
+    "desc": "Help about any command"
+  },
+  "prepare": {
+    "children": {
+      "jvm": {
+        "children": {},
+        "desc": "Attach a type agent to the jvm process"
+      }
+    },
+    "desc": "Prepare to experiment"
+  },
   "create": {
     "children": {
-      "cpu": {
-        "children": {},
-        "desc": "Cpu experiment"
-      },
-      "disk": {
-        "children": {},
-        "desc": "Disk experiment"
-      },
-      "docker": {
-        "children": {},
-        "desc": "Execute a docker experiment"
-      },
-      "dubbo": {
-        "children": {},
-        "desc": "dubbo experiment"
-      },
       "jvm": {
         "children": {
           "delay": {
-            "param": {
-              "classname": {
-                "type": "string",
-                "desc": "The class name with package"
-              },
-              "methodname": {
-                "type": "string",
-                "desc": "The method name"
-              },
-              "process": {
-                "type": "string",
-                "desc": "Application process name"
-              },
-              "value": {
-                "type": "string",
-                "desc": "Value returned, only support primitive type value. If you want return null, set --value null (required)"
-              }
-            },
+            "children": {},
             "desc": "delay time"
           },
-          "return": {
-            "param": {},
-            "desc": "Return the specify value"
-          },
           "throwCustomException": {
-            "param": {},
+            "children": {},
             "desc": "throw custom exception"
           },
           "throwDeclaredException": {
-            "param": {},
+            "children": {},
             "desc": "Throw the first declared exception of method"
+          },
+          "return": {
+            "children": {},
+            "desc": "Return the specify value"
           }
         },
         "desc": "method"
       },
-      "k8s": {
-        "children": {},
-        "desc": "Kubernetes experiment"
-      },
-      "mysql": {
-        "children": {},
-        "desc": "mysql experiment"
-      },
-      "network": {
-        "children": {},
-        "desc": "Network experiment"
+      "disk": {
+        "children": {
+          "burn": {
+            "children": {},
+            "desc": "Burn io by read or write"
+          },
+          "fill": {
+            "children": {},
+            "desc": "Fill the mounted disk"
+          }
+        },
+        "desc": "Disk experiment"
       },
       "process": {
-        "children": {},
+        "children": {
+          "kill": {
+            "children": {},
+            "desc": "Kill process"
+          }
+        },
         "desc": "Process experiment"
       },
       "servlet": {
-        "children": {},
+        "children": {
+          "delay": {
+            "children": {},
+            "desc": "delay time"
+          },
+          "throwCustomException": {
+            "children": {},
+            "desc": "throw custom exception"
+          }
+        },
         "desc": "java servlet experiment"
+      },
+      "k8s": {
+        "children": {
+          "delete": {
+            "children": {},
+            "desc": "delete pod or container"
+          }
+        },
+        "desc": "Kubernetes experiment"
+      },
+      "cpu": {
+        "children": {
+          "fullload": {
+            "children": {},
+            "desc": "cpu fullload"
+          }
+        },
+        "desc": "Cpu experiment"
+      },
+      "dubbo": {
+        "children": {
+          "delay": {
+            "children": {},
+            "desc": "delay time"
+          },
+          "throwCustomException": {
+            "children": {},
+            "desc": "throw custom exception"
+          }
+        },
+        "desc": "dubbo experiment"
+      },
+      "mysql": {
+        "children": {
+          "delay": {
+            "children": {},
+            "desc": "delay time"
+          },
+          "throwCustomException": {
+            "children": {},
+            "desc": "throw custom exception"
+          }
+        },
+        "desc": "mysql experiment"
+      },
+      "docker": {
+        "children": {
+          "disk": {
+            "children": {
+              "burn": {
+                "children": {},
+                "desc": "Burn io by read or write"
+              },
+              "fill": {
+                "children": {},
+                "desc": "Fill the mounted disk"
+              }
+            },
+            "desc": "Disk experiment"
+          },
+          "process": {
+            "children": {
+              "kill": {
+                "children": {},
+                "desc": "Kill process"
+              }
+            },
+            "desc": "Process experiment"
+          },
+          "cpu": {
+            "children": {
+              "fullload": {
+                "children": {},
+                "desc": "cpu fullload"
+              }
+            },
+            "desc": "Cpu experiment"
+          },
+          "remove": {
+            "children": {},
+            "desc": "remove a container"
+          },
+          "network": {
+            "children": {
+              "drop": {
+                "children": {},
+                "desc": "Drop experiment"
+              },
+              "loss": {
+                "children": {},
+                "desc": "Loss network package"
+              },
+              "delay": {
+                "children": {},
+                "desc": "Delay experiment"
+              },
+              "dns": {
+                "children": {},
+                "desc": "Dns experiment"
+              }
+            },
+            "desc": "Network experiment"
+          }
+        },
+        "desc": "Execute a docker experiment"
+      },
+      "network": {
+        "children": {
+          "drop": {
+            "children": {},
+            "desc": "Drop experiment"
+          },
+          "loss": {
+            "children": {},
+            "desc": "Loss network package"
+          },
+          "delay": {
+            "children": {},
+            "desc": "Delay experiment"
+          },
+          "dns": {
+            "children": {},
+            "desc": "Dns experiment"
+          }
+        },
+        "desc": "Network experiment"
       }
     },
     "desc": "Create a chaos engineering experiment"
@@ -82,24 +203,16 @@
     "children": {},
     "desc": "Destroy a chaos experiment"
   },
-  "help": {
-    "children": {},
-    "desc": "Help about any command"
-  },
-  "prepare": {
-    "children": {},
-    "desc": "Prepare to experiment"
-  },
   "revoke": {
     "children": {},
     "desc": "Undo chaos engineering experiment preparation"
   },
-  "status": {
-    "children": {},
-    "desc": "Query preparation stage or experiment status"
-  },
   "version": {
     "children": {},
     "desc": "Print version info"
+  },
+  "status": {
+    "children": {},
+    "desc": "Query preparation stage or experiment status"
   }
 }

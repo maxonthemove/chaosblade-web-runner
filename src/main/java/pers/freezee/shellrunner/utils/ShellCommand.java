@@ -1,5 +1,7 @@
 package pers.freezee.shellrunner.utils;
 
+import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -8,6 +10,7 @@ import java.io.IOException;
  *
  * @author Carlos Bernal <bernalcarvajal@gmail.com>
  */
+@Service
 public class ShellCommand {
 
     /**

@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pers.freezee.shellrunner.utils.ShellCommand;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @Description :
  * @Author: 王东杰
@@ -22,13 +26,23 @@ public class ShellController {
         modelAndView.setViewName("success");
         modelAndView.addObject("shell", shell);
         ShellCommand shellCommand = new ShellCommand();
+
+        //设置blade命令的具体地址
         String blade = "/home/sofar/go/src/github.com/chaosblade-io/chaosblade/target/chaosblade-0.0.1/blade";
         if (shell.equals("blade")) {
             shell = blade;
         }
         shellCommand.runCommand(shell);
-        modelAndView.addObject("message", shellCommand.getResponseString().replaceAll("OUTPUT>", "\\\r\\\n") +
-                shellCommand.getErrorString().replaceAll("ERROR>", ""));
+        List<String> result = new LinkedList<>();
+        result.addAll(Arrays.asList(shellCommand.getResponseString().split("OUTPUT>")));
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        result.addAll(Arrays.asList(shellCommand.getErrorString().split("ERROR>")));
+        modelAndView.addObject("messageList", result);
 
         return modelAndView;
     }
