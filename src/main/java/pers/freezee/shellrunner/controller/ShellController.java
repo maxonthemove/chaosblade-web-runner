@@ -16,15 +16,19 @@ import pers.freezee.shellrunner.utils.ShellCommand;
 @RequestMapping("/shell")
 public class ShellController {
 
-    @RequestMapping(value = "/run",method = RequestMethod.GET)
+    @RequestMapping(value = "/run", method = RequestMethod.GET)
     public ModelAndView runShell(@RequestParam String shell) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("success");
-        modelAndView.addObject("shell",shell);
+        modelAndView.addObject("shell", shell);
         ShellCommand shellCommand = new ShellCommand();
+        String blade = "/home/sofar/go/src/github.com/chaosblade-io/chaosblade/target/chaosblade-0.0.1/blade";
+        if (shell.equals("blade")) {
+            shell = blade;
+        }
         shellCommand.runCommand(shell);
-        modelAndView.addObject("message",shellCommand.getResponseString().replaceAll("OUTPUT>","\\\r\\\n")+
-                shellCommand.getErrorString().replaceAll("ERROR>",""));
+        modelAndView.addObject("message", shellCommand.getResponseString().replaceAll("OUTPUT>", "\\\r\\\n") +
+                shellCommand.getErrorString().replaceAll("ERROR>", ""));
 
         return modelAndView;
     }
