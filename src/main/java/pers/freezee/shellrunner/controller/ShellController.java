@@ -39,8 +39,12 @@ public class ShellController {
         }
         shellCommand.runCommand(shell);
         List<String> result = new LinkedList<>();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         result.addAll(Arrays.asList(shellCommand.getResponseString().split("OUTPUT>")));
-
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
