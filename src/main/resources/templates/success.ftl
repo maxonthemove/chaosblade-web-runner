@@ -15,7 +15,11 @@
             <div class="line">输入的shell命令： ${shell}</div>
             <div class="line">执行结果：</div>
             <#list messageList as item>
-                <div class="line">${item}</div>
+                <el-row :gutter="20">
+                    <el-col :span="14" :offset="6">
+                        <div class="grid-content bg-purple" style="text-align: left">${item}</div>
+                    </el-col>
+                </el-row>
             </#list>
         </el-main>
     </el-container>
@@ -23,7 +27,7 @@
         <el-row :gutter="20" style="margin-top: 50px" type="flex" justify="center">
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <el-input v-model="input" name="shell" placeholder="请输入shell命令"></el-input>
+                    <el-input id="input-box" v-model="input" name="shell" placeholder="请输入shell命令"></el-input>
                 </div>
             </el-col>
             <el-col :span="3">
@@ -33,8 +37,8 @@
                     </button>
                 </div>
             </el-col>
+        </el-row>
     </form>
-    </el-row>
 
 
 </div>
@@ -53,7 +57,7 @@
             }
         },
         mounted() {
-            // alert("sss");
+            document.getElementById("input-box").focus();
         }
     })
 </script>

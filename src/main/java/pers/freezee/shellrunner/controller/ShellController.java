@@ -1,5 +1,6 @@
 package pers.freezee.shellrunner.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,9 @@ import java.util.List;
 @RequestMapping("/shell")
 public class ShellController {
 
+    @Value("${blade.path}")
+    private String bladePath;
+
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public ModelAndView runShell(@RequestParam String shell) {
         ModelAndView modelAndView = new ModelAndView();
@@ -28,9 +32,10 @@ public class ShellController {
         ShellCommand shellCommand = new ShellCommand();
 
         //设置blade命令的具体地址
-        String blade = "/home/sofar/go/src/github.com/chaosblade-io/chaosblade/target/chaosblade-0.0.1/blade";
-        if (shell.equals("blade")) {
-            shell = blade;
+        if (shell.startsWith("blade")) {
+            shell = shell.replace("blade", bladePath);
+        } else if (shell.startsWith("./blade")) {
+            shell = shell.replace("./blade", bladePath);
         }
         shellCommand.runCommand(shell);
         List<String> result = new LinkedList<>();

@@ -17,7 +17,7 @@
         <el-row :gutter="20" style="margin-top: 50px" type="flex" justify="center">
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <el-input v-model="input" name="shell" placeholder="请输入内容"></el-input>
+                    <el-input id="input-box" v-model="input" name="shell" placeholder="请输入内容"></el-input>
                 </div>
             </el-col>
             <el-col :span="3">
@@ -27,8 +27,9 @@
                     </button>
                 </div>
             </el-col>
+        </el-row>
     </form>
-    </el-row>
+
 
 
 </div>
@@ -47,7 +48,7 @@
             }
         },
         mounted() {
-            // alert("sss");
+            document.getElementById("input-box").focus();
         }
     })
 </script>
