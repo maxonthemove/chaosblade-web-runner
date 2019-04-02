@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../static/mystyle.css">
 </head>
-<body>
+<body style="height: 100%">
 <div id="app">
-    <el-button @click="visible = true">Button</el-button>
-    <el-dialog :visible.sync="visible" title="Hello world">
-        <p>Try Element</p>
-    </el-dialog>
+    <div id="whole">
+        <div >121212</div>
+
+    </div>
 </div>
 </body>
 <!-- import Vue before Element -->
@@ -22,6 +23,9 @@
         el: '#app',
         data: function () {
             return {visible: false}
+        },
+        methods(){
+
         }
     })
 </script>
