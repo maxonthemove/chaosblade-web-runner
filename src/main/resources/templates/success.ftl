@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- import CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../static/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="../static/mystyle.css">
 </head>
 <body>
@@ -40,9 +40,9 @@
 </div>
 </body>
 <!-- import Vue before Element -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="../static/vue.js"></script>
 <!-- import JavaScript -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../static/element-ui/lib/index.js"></script>
 <script>
     new Vue({
         el: '#app',
