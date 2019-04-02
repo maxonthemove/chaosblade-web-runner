@@ -16,4 +16,4 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
-blade.path: /home/sofar/go/src/github.com/chaosblade-io/chaosblade/target/chaosblade-0.0.1/blade
+blade.path: /root/go/src/github.com/chaosblade-io/chaosblade/target/chaosblade-0.0.1/blade

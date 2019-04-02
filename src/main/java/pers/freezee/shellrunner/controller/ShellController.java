@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @Description :
+ * @Description : main component
  * @Author: 王东杰
  * @Date: Created in 2019/3/29 16:58
  */
@@ -27,7 +27,8 @@ public class ShellController {
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public ModelAndView runShell(@RequestParam String shell) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("success");
+        modelAndView.setViewName("index");
+        shell = shell.trim();
         modelAndView.addObject("shell", shell);
         ShellCommand shellCommand = new ShellCommand();
 
@@ -41,16 +42,13 @@ public class ShellController {
         List<String> result = new LinkedList<>();
         try {
             Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        result.addAll(Arrays.asList(shellCommand.getResponseString().split("OUTPUT>")));
-        try {
+            result.addAll(Arrays.asList(shellCommand.getResponseString().split("OUTPUT>")));
             Thread.sleep(100);
+            result.addAll(Arrays.asList(shellCommand.getErrorString().split("ERROR>")));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        result.addAll(Arrays.asList(shellCommand.getErrorString().split("ERROR>")));
+
         modelAndView.addObject("messageList", result);
 
         return modelAndView;

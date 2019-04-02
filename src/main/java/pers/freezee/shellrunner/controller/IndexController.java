@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 /**
  * @Description : 首页
  * @Author: 王东杰
@@ -15,11 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
     @RequestMapping("/")
-    public String index() {
-//        return "index";
-        return "guide";
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        modelAndView.addObject("messageList", new ArrayList<>());
+        modelAndView.addObject("shell", "");
+        return modelAndView;
     }
-
-
 
 }
