@@ -1,11 +1,9 @@
 package pers.freezee.shellrunner.singleton;
 
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.util.ResourceUtils;
 import pers.freezee.shellrunner.entity.CommandEntity;
-import pers.freezee.shellrunner.utils.FileUtil;
+import pers.freezee.shellrunner.utils.ClassPathResourceReader;
 
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,13 +31,8 @@ public class BladeCommand {
     }
 
     private void setCommand() {
-        String path = "classpath:command.json";
-        String result = "";
-        try {
-            result = FileUtil.readFile(ResourceUtils.getFile(path));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        String path = "command.json";
+        String result = new ClassPathResourceReader(path).getContent();
         JSONObject jsonObject = JSONObject.parseObject(result);
         CommandEntity entity = new CommandEntity();
         entity.setDesc("chaos-balde");
