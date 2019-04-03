@@ -3,6 +3,8 @@ package pers.freezee.shellrunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pers.freezee.shellrunner.singleton.BladeCommand;
+import pers.freezee.shellrunner.singleton.CommandExample;
+import pers.freezee.shellrunner.singleton.CommandHistory;
 
 /**
  * @Description : 服务启动前加载 单例
@@ -14,5 +16,7 @@ public class ReadBladeCommandRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         BladeCommand.getInstance();
+        CommandHistory.getInstance();
+        CommandExample.getInstance();
     }
 }

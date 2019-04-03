@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pers.freezee.shellrunner.singleton.BladeCommand;
+import pers.freezee.shellrunner.singleton.CommandHistory;
 
 @RestController
 @RequestMapping("/")
@@ -17,5 +18,10 @@ public class CommandController {
             return "[]";
         }
         return JSONObject.toJSONString(BladeCommand.getInstance().getCommandList(shell));
+    }
+
+    @RequestMapping("/getShellList")
+    public String getShellList() {
+        return JSONObject.toJSONString(CommandHistory.getInstance().getShellList());
     }
 }

@@ -1,0 +1,5 @@
+##连接目标进程
+blade prepare jvm --process tomcat
+
+##创建延时实验
+blade create jvm delay --classname=xxx --methodname=xxx --time=3000

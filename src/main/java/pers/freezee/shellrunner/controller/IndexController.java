@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import pers.freezee.shellrunner.singleton.BladeCommand;
+import pers.freezee.shellrunner.singleton.CommandExample;
+import pers.freezee.shellrunner.singleton.CommandHistory;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,8 @@ public class IndexController {
         modelAndView.addObject("messageList", new ArrayList<>());
         modelAndView.addObject("shell", "");
         modelAndView.addObject("commandList", JSONObject.toJSONString(BladeCommand.getInstance().getCommandList("blade")));
+        modelAndView.addObject("history", CommandHistory.getInstance().getHistory());
+        modelAndView.addObject("example", CommandExample.getInstance().getExample());
         return modelAndView;
     }
 

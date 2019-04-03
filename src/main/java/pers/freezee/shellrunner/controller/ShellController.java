@@ -1,6 +1,7 @@
 package pers.freezee.shellrunner.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import freemarker.template.utility.DateUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -9,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pers.freezee.shellrunner.singleton.BladeCommand;
+import pers.freezee.shellrunner.singleton.CommandExample;
+import pers.freezee.shellrunner.singleton.CommandHistory;
 import pers.freezee.shellrunner.utils.ShellCommand;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Description : main component
@@ -33,10 +34,13 @@ public class ShellController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         shell = shell.trim();
+        String originShell = shell;
         modelAndView.addObject("shell", shell);
         if (StringUtils.isEmpty(shell)) {
             modelAndView.addObject("messageList", new ArrayList<>());
             modelAndView.addObject("commandList", JSONObject.toJSONString(BladeCommand.getInstance().getCommandList("blade")));
+            modelAndView.addObject("history",CommandHistory.getInstance().getHistory());
+            modelAndView.addObject("example", CommandExample.getInstance().getExample());
             return modelAndView;
         }
 
@@ -62,8 +66,30 @@ public class ShellController {
 
         modelAndView.addObject("messageList", result);
 
+        CommandHistory.getInstance().setHistory(setHistory(originShell,result));
+        modelAndView.addObject("history",CommandHistory.getInstance().getHistory());
+        modelAndView.addObject("example", CommandExample.getInstance().getExample());
+
         return modelAndView;
     }
 
+    private String setHistory(String shell, List<String> result) {
+        String history = CommandHistory.getInstance().getHistory();
+        CommandHistory.getInstance().getShellList().add(shell);
+        StringBuilder builder = new StringBuilder();
+        builder.append(history);
+        builder.append("<br>******************************************<br>");
+        builder.append(new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(new Date())+"<br>");
+        builder.append("命令: "+shell+"<br>");
+        builder.append("输出: <br>");
+        if(result.size()>0){
+            for (int i = 0; i < result.size(); i++) {
+                builder.append(result.get(i));
+                builder.append("<br>");
+            }
+        }
+        builder.append("******************************************<br>");
+        return builder.toString();
+    }
 
 }

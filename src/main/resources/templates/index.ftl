@@ -11,6 +11,23 @@
 
     <el-container>
         <el-header>ChaosBlade 网页执行器</el-header>
+        <el-row type="flex" justify="center">
+            <el-popover
+                    placement="bottom"
+                    width="600"
+                    trigger="click">
+                <div style="height: 600px;overflow-x: scroll"> ${history}</div>
+                <el-button slot="reference" type="success">History</el-button>
+            </el-popover>
+            <el-popover
+                    placement="bottom"
+                    width="600"
+                    trigger="click"
+                    style="margin-left: 50px">
+                <div style="height: 600px;overflow-x: scroll"> ${example}</div>
+                <el-button slot="reference" type="warning">Example</el-button>
+            </el-popover>
+        </el-row>
         <el-main id="out">
             <div class="line">输入的shell命令： <span id="shell">${shell}<span></div>
             <div class="line">执行结果：</div>
@@ -30,7 +47,9 @@
         <el-row :gutter="20" style="margin-top: 50px" type="flex" justify="center">
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <el-input id="input-box" v-model="input" name="shell" placeholder="请输入shell命令"></el-input>
+                    <el-input id="input-box" v-model="input" name="shell" v-on:keyup.up.native="lastShell"
+                              v-on:keyup.down.native="nextShell"
+                              placeholder="请输入shell命令"></el-input>
                 </div>
             </el-col>
             <el-col :span="3">
@@ -81,7 +100,9 @@
             return {
                 visible: false,
                 input: "",
-                commandObjectList: []
+                commandObjectList: [],
+                shellList: [],
+                shellOffset: 0
             }
         },
         mounted() {
@@ -94,9 +115,20 @@
             }
             let commandCollection = document.getElementById("commandCollection").innerText;
             this.commandObjectList = JSON.parse(commandCollection);
-            if (this.commandObjectList.length === 0 && this.input.indexOf('help') === -1) {
+            if (this.commandObjectList.length === 0 && this.input.indexOf('help') === -1 && this.input.indexOf('blade') > -1) {
                 this.input = this.input + '--help ';
             }
+            var _this = this;
+            axios.get('/getShellList')
+                .then(function (response) {
+                    console.log(response);
+                    console.log(response.data);
+                    _this.shellList = response.data
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
         methods: {
             commandClicked(key) {
@@ -107,7 +139,7 @@
                         console.log(response);
                         console.log(response.data);
                         _this.commandObjectList = response.data
-                        if (_this.commandObjectList.length === 0 && _this.input.indexOf('help') === -1) {
+                        if (_this.commandObjectList.length === 0 && _this.input.indexOf('help') === -1 && this.input.indexOf('blade') > -1) {
                             _this.input = _this.input + '--help ';
                         }
                     })
@@ -116,6 +148,20 @@
                     });
                 console.log("key:" + key);
                 document.getElementById("input-box").focus();
+            },
+            lastShell() {
+                console.log(this.shellList)
+                this.input = this.shellList[this.shellList.length - 1 - this.shellOffset]
+                if (this.shellOffset < this.shellList.length - 1) {
+                    this.shellOffset += 1
+                }
+            },
+            nextShell() {
+                console.log("next")
+                this.input = this.shellList[this.shellList.length - 1 - this.shellOffset]
+                if (this.shellOffset > 0) {
+                    this.shellOffset -= 1
+                }
             }
         }
     })
