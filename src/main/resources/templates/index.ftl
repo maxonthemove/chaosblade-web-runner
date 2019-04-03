@@ -59,7 +59,7 @@
                     </button>
                 </div>
             </el-col>
-            <div style="font-size: 20px;margin-top: 3px">添加 --help 查看命令帮助</div>
+            <div style="font-size: 20px;margin-top: 3px">帮助 --help</div>
         </el-row>
     </form>
     <div v-for="(item,index) in commandObjectList">
@@ -76,7 +76,7 @@
                     </el-button>
                 </div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="8">
                 <div class="grid-content bg-purple-light">
                     {{item.desc}}
                 </div>
@@ -121,13 +121,13 @@
             var _this = this;
             axios.get('/getShellList')
                 .then(function (response) {
-                    console.log(response);
-                    console.log(response.data);
+                    // console.log(response);
+                    // console.log(response.data);
                     _this.shellList = response.data
 
                 })
                 .catch((error) => {
-                    console.log(error);
+                    // console.log(error);
                 });
         },
         methods: {
@@ -136,28 +136,28 @@
                 var _this = this;
                 axios.get('/getCommand?shell=' + _this.input)
                     .then(function (response) {
-                        console.log(response);
-                        console.log(response.data);
+                        // console.log(response);
+                        // console.log(response.data);
                         _this.commandObjectList = response.data
                         if (_this.commandObjectList.length === 0 && _this.input.indexOf('help') === -1 && this.input.indexOf('blade') > -1) {
                             _this.input = _this.input + '--help ';
                         }
                     })
                     .catch((error) => {
-                        console.log(error);
+                        // console.log(error);
                     });
-                console.log("key:" + key);
+                // console.log("key:" + key);
                 document.getElementById("input-box").focus();
             },
             lastShell() {
-                console.log(this.shellList)
+                // console.log(this.shellList)
                 this.input = this.shellList[this.shellList.length - 1 - this.shellOffset]
                 if (this.shellOffset < this.shellList.length - 1) {
                     this.shellOffset += 1
                 }
             },
             nextShell() {
-                console.log("next")
+                // console.log("next")
                 this.input = this.shellList[this.shellList.length - 1 - this.shellOffset]
                 if (this.shellOffset > 0) {
                     this.shellOffset -= 1

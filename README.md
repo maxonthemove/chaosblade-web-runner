@@ -23,7 +23,7 @@
 ## 安装使用
 本项目为SpringBoot项目,下载后在根目录执行编译.
 ```bash
-mvn clean compile -Dmaven.test.skip=true
+mvn clean package -Dmaven.test.skip=true
 ```
 启动需要自行设置端口号.还有blade.path参数(chaosbalde执行文件位置),ex.
 ```bash

@@ -41,7 +41,7 @@ public class BladeCommand {
         entity.setChildren(new LinkedList<CommandEntity>());
         entity.setChildren(setEntityList(jsonObject, entity.getChildren()));
         this.commandEntity = entity;
-        System.out.println(this.commandEntity);
+//        System.out.println(this.commandEntity);
 
     }
 
@@ -68,7 +68,7 @@ public class BladeCommand {
             if (endEntity.getKey().equals(shellList.get(i))) {
                 //包含该等级命令,获取子集命令列表
                 if (i == shellList.size() - 1) {
-                    System.out.println(endEntity.getChildren());
+//                    System.out.println(endEntity.getChildren());
                     return endEntity.getChildren();
                 }
                 for (int j = 0; j < endEntity.getChildren().size(); j++) {
