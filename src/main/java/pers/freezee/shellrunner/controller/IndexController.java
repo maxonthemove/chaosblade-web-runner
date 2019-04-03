@@ -1,11 +1,13 @@
 package pers.freezee.shellrunner.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import pers.freezee.shellrunner.singleton.BladeCommand;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class IndexController {
         modelAndView.setViewName("index");
         modelAndView.addObject("messageList", new ArrayList<>());
         modelAndView.addObject("shell", "");
+        modelAndView.addObject("commandList", JSONObject.toJSONString(BladeCommand.getInstance().getCommandList("blade")));
         return modelAndView;
     }
 

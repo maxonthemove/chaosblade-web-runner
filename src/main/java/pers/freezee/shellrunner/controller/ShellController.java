@@ -1,11 +1,13 @@
 package pers.freezee.shellrunner.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pers.freezee.shellrunner.singleton.BladeCommand;
 import pers.freezee.shellrunner.utils.ShellCommand;
 
 import java.util.Arrays;
@@ -30,6 +32,7 @@ public class ShellController {
         modelAndView.setViewName("index");
         shell = shell.trim();
         modelAndView.addObject("shell", shell);
+        modelAndView.addObject("commandList", JSONObject.toJSONString(BladeCommand.getInstance().getCommandList(shell)));
         ShellCommand shellCommand = new ShellCommand();
 
         //设置blade命令的具体地址
@@ -53,4 +56,6 @@ public class ShellController {
 
         return modelAndView;
     }
+
+
 }

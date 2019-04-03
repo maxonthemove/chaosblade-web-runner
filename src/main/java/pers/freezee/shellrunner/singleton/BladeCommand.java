@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import pers.freezee.shellrunner.entity.CommandEntity;
 import pers.freezee.shellrunner.utils.ClassPathResourceReader;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,4 +59,29 @@ public class BladeCommand {
         }
         return list;
     }
+
+    public List<CommandEntity> getCommandList(String shell) {
+        List<CommandEntity> commandList = new LinkedList<>();
+        List<String> shellList = Arrays.asList(shell.split(" "));
+        CommandEntity endEntity = this.commandEntity;
+        for (int i = 0; i < shellList.size(); i++) {
+            if (endEntity.getKey().equals(shellList.get(i))) {
+                //包含该等级命令,获取子集命令列表
+                if (i == shellList.size() - 1) {
+                    System.out.println(endEntity.getChildren());
+                    return endEntity.getChildren();
+                }
+                for (int j = 0; j < endEntity.getChildren().size(); j++) {
+                    if (endEntity.getChildren().get(j).getKey().equals(shellList.get(i + 1))) {
+                        //取得了当前key
+                        endEntity = endEntity.getChildren().get(j);
+                    }
+                }
+            } else {
+                return commandList;
+            }
+        }
+        return commandList;
+    }
+
 }

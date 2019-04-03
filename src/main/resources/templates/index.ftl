@@ -23,6 +23,7 @@
             </#list>
         </el-main>
     </el-container>
+
     <form action="/shell/run" method="get">
         <el-row :gutter="20" style="margin-top: 50px" type="flex" justify="center">
             <el-col :span="12">
@@ -31,7 +32,7 @@
                 </div>
             </el-col>
             <el-col :span="3">
-                <div class="grid-content bg-purple-light">
+                <div class="grid-content bg-purple">
                     <button style="border: none;background:white;margin-top: -2px" type="submit">
                         <el-button type="primary">提交</el-button>
                     </button>
@@ -39,14 +40,37 @@
             </el-col>
         </el-row>
     </form>
+    <div v-for="(item,index) in commandKeyList">
+        <el-row style="margin-top: 20px" type="flex" justify="left">
+            <el-col :span="5">
+                <div class="grid-content bg-purple"></div>
+            </el-col>
 
-
+            <el-col :span="3">
+                <div class="grid-content bg-purple">
+                    <el-button type="primary" @click=commandClicked(item)
+                               style="width: 100px;font-size: 20px">
+                        {{item}}
+                    </el-button>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <div class="grid-content bg-purple-light">
+                    {{getCommandDesc(item)}}
+                </div>
+            </el-col>
+        </el-row>
+    </div>
+    <div id="commandCollection" hidden> ${commandList}</div>
 </div>
 </body>
+
 <!-- import Vue before Element -->
 <script src="../static/vue.js"></script>
 <!-- import JavaScript -->
 <script src="../static/element-ui/lib/index.js"></script>
+<#--import axios-->
+<script src="../static/axios.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -54,23 +78,57 @@
             return {
                 visible: false,
                 input: "",
+                commandObjectList: [],
+                commandKeyList: []
             }
         },
         mounted() {
             document.getElementById("input-box").focus();
             let shell = document.getElementById("shell").innerText;
             if (shell) {
-                this.input = shell+" ";
+                this.input = shell + " ";
             } else {
                 this.input = 'blade ';
+            }
+            let commandCollection = document.getElementById("commandCollection").innerText;
+            this.commandObjectList = JSON.parse(commandCollection);
+            for (let i = 0; i < this.commandObjectList.length; i++) {
+                this.commandKeyList[i] = this.commandObjectList[i].key;
+            }
+        },
+        methods: {
+            commandClicked(key) {
+                this.input = this.input + key + " ";
+                var _this = this;
+                axios.get('/getCommand?shell=' + this.input)
+                    .then(function (response) {
+                        console.log(response);
+                        console.log(response.data);
+                        _this.commandObjectList = response.data
+                        _this.commandKeyList = [];
+                        for (let i = 0; i < _this.commandObjectList.length; i++) {
+                            _this.commandKeyList[i] = _this.commandObjectList[i].key;
+                        }
+                        console.log(_this.commandKeyList)
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                console.log("key:" + key);
+                document.getElementById("input-box").focus();
+            },
+            getCommandDesc(key) {
+                for (let i = 0; i < this.commandObjectList.length; i++) {
+                    if (this.commandObjectList[i].key === key) {
+                        return this.commandObjectList[i].desc;
+                    }
+                }
+                return "desc";
             }
         }
     })
 </script>
 <style>
-    .line {
-        /*height: 20px;*/
-    }
 
     .el-header, .el-footer {
         background-color: #B3C0D1;
@@ -105,6 +163,12 @@
     .el-container:nth-child(7) .el-aside {
         line-height: 320px;
     }
+
+    .bg-purple-light {
+        /*margin-top: 8px;*/
+        font-size: 23px;
+    }
+
 </style>
 </html>
 
