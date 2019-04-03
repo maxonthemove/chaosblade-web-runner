@@ -25,6 +25,8 @@
     </el-container>
 
     <form action="/shell/run" method="get">
+
+
         <el-row :gutter="20" style="margin-top: 50px" type="flex" justify="center">
             <el-col :span="12">
                 <div class="grid-content bg-purple">
@@ -34,13 +36,14 @@
             <el-col :span="3">
                 <div class="grid-content bg-purple">
                     <button style="border: none;background:white;margin-top: -2px" type="submit">
-                        <el-button type="primary">提交</el-button>
+                        <el-button type="primary">执行</el-button>
                     </button>
                 </div>
             </el-col>
+            <div style="font-size: 20px;margin-top: 3px">添加 --help 查看命令帮助</div>
         </el-row>
     </form>
-    <div v-for="(item,index) in commandKeyList">
+    <div v-for="(item,index) in commandObjectList">
         <el-row style="margin-top: 20px" type="flex" justify="left">
             <el-col :span="5">
                 <div class="grid-content bg-purple"></div>
@@ -48,15 +51,15 @@
 
             <el-col :span="3">
                 <div class="grid-content bg-purple">
-                    <el-button type="primary" @click=commandClicked(item)
+                    <el-button type="primary" @click=commandClicked(item.key)
                                style="width: 100px;font-size: 20px">
-                        {{item}}
+                        {{item.key}}
                     </el-button>
                 </div>
             </el-col>
             <el-col :span="6">
                 <div class="grid-content bg-purple-light">
-                    {{getCommandDesc(item)}}
+                    {{item.desc}}
                 </div>
             </el-col>
         </el-row>
@@ -78,8 +81,7 @@
             return {
                 visible: false,
                 input: "",
-                commandObjectList: [],
-                commandKeyList: []
+                commandObjectList: []
             }
         },
         mounted() {
@@ -92,38 +94,28 @@
             }
             let commandCollection = document.getElementById("commandCollection").innerText;
             this.commandObjectList = JSON.parse(commandCollection);
-            for (let i = 0; i < this.commandObjectList.length; i++) {
-                this.commandKeyList[i] = this.commandObjectList[i].key;
+            if (this.commandObjectList.length === 0 && this.input.indexOf('help') === -1) {
+                this.input = this.input + '--help ';
             }
         },
         methods: {
             commandClicked(key) {
                 this.input = this.input + key + " ";
                 var _this = this;
-                axios.get('/getCommand?shell=' + this.input)
+                axios.get('/getCommand?shell=' + _this.input)
                     .then(function (response) {
                         console.log(response);
                         console.log(response.data);
                         _this.commandObjectList = response.data
-                        _this.commandKeyList = [];
-                        for (let i = 0; i < _this.commandObjectList.length; i++) {
-                            _this.commandKeyList[i] = _this.commandObjectList[i].key;
+                        if (_this.commandObjectList.length === 0 && _this.input.indexOf('help') === -1) {
+                            _this.input = _this.input + '--help ';
                         }
-                        console.log(_this.commandKeyList)
                     })
                     .catch((error) => {
                         console.log(error);
                     });
                 console.log("key:" + key);
                 document.getElementById("input-box").focus();
-            },
-            getCommandDesc(key) {
-                for (let i = 0; i < this.commandObjectList.length; i++) {
-                    if (this.commandObjectList[i].key === key) {
-                        return this.commandObjectList[i].desc;
-                    }
-                }
-                return "desc";
             }
         }
     })
