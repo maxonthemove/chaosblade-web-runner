@@ -32,7 +32,7 @@ public class ShellController {
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public ModelAndView runShell(@RequestParam String shell) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("command");
         shell = shell.trim();
         String originShell = shell;
         modelAndView.addObject("shell", shell);
