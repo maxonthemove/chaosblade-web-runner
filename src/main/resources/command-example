@@ -1,5 +1,29 @@
-##连接目标进程
+## 连接目标进程
 blade prepare jvm --process tomcat
 
-##创建延时实验
-blade create jvm delay --classname=xxx --methodname=xxx --time=3000
+## 延长 dubbo 接口的返回时间
+blade create dubbo delay --time 3000 --service com.example.service.DemoService --methodname sayHello --consumer
+
+## 使 dubbo 抛出自定义异常
+blade create dubbo throwCustomException --exception java.lang.Exception  --classname com.example.controller.DubboController --methodname hello
+
+## 创建 jvm 延时实验
+blade create jvm delay --methodname=hello --classname=com.example.controller.TestController --time=3000
+
+## 对于某个java方法，更改其返回值。目前只支持简单类型例如string
+blade create jvm return --methodname=hello --classname=com.example.controller.TestController --value=success
+
+## 对于某个java方法，使其抛出方法声明的第一个异常。
+blade create jvm throwDeclaredException --classname com.example.controller.TestController --methodname hello
+
+## 对于某个java方法，使其抛出自定义异常。
+blade create jvm throwCustomException --exception java.lang.Exception  --classname com.example.controller.TestController --methodname hello
+
+## 将cpu设置为满负荷运转。
+blade create cpu fullload
+
+## 销毁实验，比如销毁上面提到的延长dubbo接口返回时间的实验
+blade destroy  UID   (该UID为 create 执行完成后返回的 result 的值)
+
+## 撤消混沌工程实验前准备，如拆分Java代理。命令是
+blade revoke UID  （该UID为 prepare 执行完成后返回的 result 的值）
