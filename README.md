@@ -25,10 +25,10 @@
 ```bash
 mvn clean package -Dmaven.test.skip=true
 ```
-启动需要自行设置端口号.还有blade.path参数(chaosbalde执行文件位置),ex.
+启动需要自行设置端口号.还有blade.path参数(chaosbalde执行文件位置), ex.
 ```bash
  blade.path: /root/go/src/github.com/chaosblade-io/chaosblade/target/chaosblade-0.0.1/blade
 ```
 
 # 重要备注
-仅供在Linux环境下,且安装golang环境,且安装chaosbalde的情况下使用
+仅供在Linux环境下,且安装chaosbalde的情况下使用
