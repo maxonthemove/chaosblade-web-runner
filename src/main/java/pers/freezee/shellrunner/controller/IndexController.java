@@ -21,12 +21,13 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/")
 public class IndexController {
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/command")
+
+    @RequestMapping({"/","/command"})
     public ModelAndView command() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("command");
